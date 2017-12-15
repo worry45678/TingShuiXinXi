@@ -1,0 +1,56 @@
+
+### 学习内容
+1. flask通用
+    1. 注册蓝本以及路由前缀 `app.register_blueprint(auth_blueprint, url_prefix='/auth')`
+
+2. flask_login 管理已登陆用户的用户会话
+    1. `from flask_login import UserMixin`用户模型实现方法
+        `class User(UserMixin,db.Model)`
+    2. `from flask_login import LoginManger`登陆管理app/__init__.py:
+        ```
+        login_manager = LoginManager()
+        login_manager.session_protection = 'strong' # 保护强度
+        login_manager.login_view = 'auth.login' # 登陆页面的端点
+        ```
+        要求实现回调函数，如下app/models.py：
+        ```
+        from . import login_manager
+
+        @login_manager.user_loader
+        def load_user(user_id):
+            return User.query.get(int(user_id))
+        ```
+    3. 保护路由，未登陆用户返回login页面
+        ```
+        from flask.ext.login import login_required
+        @app.route('/secret')
+        @login_required
+        def secret():
+            return 'Only authenticated users are allowed!'
+        ```
+    4. jinja模板中可以使用*current_user* 来调用当前用户的对象，*current_user.is_authenticated*用来验证是否登陆成功
+    5. 登录，登出用户
+        ```from flask_login imort login_user,logout_user,login_required
+        login_user(user, remember_me=True) # 以用户对象user登陆
+        logout_user() # 登出当前用户
+        ```
+
+3. werkzeug 计算密码散列值并进行核对
+    1. `generate_password_hash(password, method=pbkdf2:sha1, salt_length=8)` **返回密码的散列值**
+    2. `check_password_hash(hash, password)` 比较散列值和输入的密码，正确则返回True
+    3. 用户模型中添加验证方法：  
+    ```
+    from werkzeug.security import generate_password_hash,check_password_hash, class User(db.Model):
+
+    password_hash = db.Column(db.String(128))
+    @property
+    def password(self):
+        raise AttributeError('password is not a readable attribute')
+
+    @password.setter
+        def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
+    ```
