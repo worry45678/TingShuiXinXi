@@ -3,6 +3,7 @@ from sqlalchemy import or_, and_
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from . import login_manger
+from datetime import datetime
 
 class tblData(db.Model):  # 停水数据表model
     __tablename__ = "tblData"  # 表名
@@ -15,6 +16,10 @@ class tblData(db.Model):  # 停水数据表model
     area = db.Column("Area", db.Text)
     type_id = db.Column("typeid", db.ForeignKey('tblType.ID'))
     user_id = db.Column("userid", db.ForeignKey('tblUser.ID'))
+
+    def __repr__(self):
+        return '''{"id":%d,"startdate":"%s","enddate":"%s","address":"%s","area":"%s","typename":"%s","username":"%s"}''' %(
+                    self.id, datetime.strftime(self.startdate,'%Y-%m-%d %H:%M:%S'), datetime.strftime(self.enddate,'%Y-%m-%d %H:%M:%S'), self.address,self.area, self.typename.name, self.username.name)
 
 class tblType(db.Model):
     __tablename__ = "tblType"

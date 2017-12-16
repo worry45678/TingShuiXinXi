@@ -1,15 +1,46 @@
-{% extends "base.html" %}
+{% extends "baselayui.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}登陆{% endblock %}
 
 {% block page_content %}
-<div class="page-header">
-    <h1>Login</h1>
-</div>
-<div class="col-md-4">
-    {{ wtf.quick_form(form) }}
-</div>
+
+    <!--{{ wtf.quick_form(form) }} -->
+    <div class="layui-container layui-bg-green">  
+        <div class="layui-row">
+            <div class="layui-col-md4">
+              <br>
+            </div>
+          <div class="layui-col-md4">
+    <form id="login" class="layui-form" action method="POST">
+        <div class="layui-form-item">
+          <label class="layui-form-label">用户名：</label>
+          <div class="layui-input-block">
+            <input type="text" name="username" id="username" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label">密码：</label>
+            <div class="layui-input-block">
+              <input type="password" name="password" id="password" required  lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">记住我</label>
+        <div class="layui-input-block">
+          <input type="checkbox" name="remember_me" id="remember_me" title="记住我">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button class="layui-btn" lay-submit lay-filter="formDemo">立即登陆</button>
+        </div>
+      </div>
+    </form>
+    </div>
+        </div>
+        </div>
+
 <p>
     New user?
     <a href="{{ url_for('auth.register') }}">
@@ -17,3 +48,18 @@
     </a>
 </p>
 {% endblock %}
+
+{% block scripts %}
+<script>
+    //Demo
+    layui.use('form', function(){
+      var form = layui.form;
+      
+      //监听提交
+      form.on('submit(formDemo)', function(data){
+      $('#login').submit();
+       // $.post('auth/login',data.field);
+      });
+    });
+    </script>
+{% endblock %}    

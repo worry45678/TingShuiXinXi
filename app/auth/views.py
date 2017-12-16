@@ -11,7 +11,7 @@ def login():
     登陆页面
     """
     form = LoginForm()
-    if form.validate_on_submit(): # 验证是否提交按钮
+    if request.method == 'POST': # 验证是否提交按钮
         user = tblUser.query.filter_by(name=form.username.data).first() # 数据库中获取username对应的对象
         if user is not None and user.verify_password(form.password.data): # 验证用户名和密码
             login_user(user, form.remember_me.data) # 使用login_user函数登陆用户
@@ -39,7 +39,8 @@ def register():
     注册页面，根据用户表单填写信息写入数据库
     """
     form = RegistrationForm()
-    if form.validate_on_submit():
+    if request.methods == 'POST':
+        print('ok')
         user = tblUser(name=form.username.data, password=form.password.data)
         db.session.add(user)
         flash('You can now login')

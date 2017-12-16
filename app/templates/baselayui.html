@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+  <head> <!-- head部分加入favicon图标 -->
+
+    <title>{% block title %}停水信息{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="/static/layui/css/layui.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/static/favicon.ico"
+      type="image/x-icon"> <link rel="icon" href="/static/favicon.ico"
+                                 type="image/x-icon">
+
+  </head>
+  <body>
+    <ul class="layui-nav">
+        <li class="layui-nav-item">
+          <a href="">控制台<span class="layui-badge">9</span></a>
+        </li>
+        <li class="layui-nav-item">
+          <a href="">个人中心<span class="layui-badge-dot"></span></a>
+        </li>
+        <li class="layui-nav-item">
+          <a href=""><img src="http://t.cn/RCzsdCq" class="layui-nav-img">我</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;">修改信息</a></dd>
+            <dd><a href="javascript:;">安全管理</a></dd>
+            <dd><a href="javascript:;">退了</a></dd>
+          </dl>
+        </li>
+      </ul>
+
+      
+      {% block content %}
+      <div class="container">
+                  {% block page_content %}<h1>page_content</h1>{% endblock %}
+      </div>
+      {% endblock %}
+
+   
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="/static/layui/layui.js"></script>
+
+{% block scripts %}
+{% endblock %}
+  </body>
+</html>
