@@ -19,7 +19,7 @@ class tblData(db.Model):  # 停水数据表model
 
     def __repr__(self):
         return '''{"id":%d,"startdate":"%s","enddate":"%s","address":"%s","area":"%s","typename":"%s","username":"%s"}''' %(
-                    self.id, datetime.strftime(self.startdate,'%Y-%m-%d %H:%M:%S'), datetime.strftime(self.enddate,'%Y-%m-%d %H:%M:%S'), self.address,self.area, self.typename.name, self.username.name)
+                    self.id, self.startdate, self.enddate, self.address,self.area, self.typename.name, self.username.name)
 
 class tblType(db.Model):
     __tablename__ = "tblType"

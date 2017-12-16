@@ -39,7 +39,7 @@ def register():
     注册页面，根据用户表单填写信息写入数据库
     """
     form = RegistrationForm()
-    if request.methods == 'POST':
+    if request.method == 'POST':
         print('ok')
         user = tblUser(name=form.username.data, password=form.password.data)
         db.session.add(user)

@@ -4,28 +4,40 @@
 {% block title %}登入停水信息{% endblock %}
 
 {% block page_content %}
-<div class="layui-container layui-bg-blue">  
+<div class="layui-container">  
     <div class="layui-row">
-
-      <div class="layui-col-md4">
+<hr>
+      <div class="layui-col-md3">
+          <div class="layui-header">
+            <h2 style="text-align:center">录入停水信息</h2>
+          </div>
 <form id="login" class="layui-form" action method="POST">
     <div class="layui-form-item">
       <label class="layui-form-label">开始时间</label>
       <div class="layui-input-block">
         <input type="text" name="startdate" id="startdate" required  lay-verify="required" placeholder="开始日期" autocomplete="off" class="layui-input">
       </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">结束时间</label>
         <div class="layui-input-block">
-          <input type="text" name="enddate" id="enddate" required  lay-verify="required" placeholder="结束日期" autocomplete="off" class="layui-input">
+          <input type="text" name="enddate" id="enddate" placeholder="结束日期" autocomplete="off" class="layui-input">
         </div>
+    </div>
+
+    <div class="layui-form-item">
         <label class="layui-form-label">抢修地址</label>
         <div class="layui-input-block">
           <input type="text" name="address" id="address" required  lay-verify="required" placeholder="抢修地址" autocomplete="off" class="layui-input">
         </div>
-        <label class="layui-form-label">影响区域</label>
-        <div class="layui-input-block">
-          <input type="text" name="area" id="area" required  lay-verify="required" placeholder="影响区域" autocomplete="off" class="layui-input">
-        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">影响区域</label>
+      <div class="layui-input-block">
+        <textarea name="area" id="area" placeholder="请输入内容" class="layui-textarea"></textarea>
+      </div>
+    </div>
         <div class="layui-form-item">
             <label class="layui-form-label">选择框</label>
             <div class="layui-input-block">
@@ -36,13 +48,17 @@
               </select>
             </div>
           </div>
-    </div>
+
+
   <div class="layui-form-item">
     <div class="layui-input-block">
-      <button class="layui-btn" lay-submit lay-filter="formDemo">立即登陆</button>
+      <button class="layui-btn" lay-submit lay-filter="formDemo">立即录入</button>
     </div>
   </div>
 </form>
+</div>
+<div class="layui-col-md1">
+  <br>
 </div>
 <div class="layui-col-md8">
     <table id="tingshui" lay-filter="test"></table>
@@ -85,17 +101,18 @@ layui.use('table',function(){
   
 table.render({
   elem: '#tingshui' //指定原始表格元素选择器（推荐id选择器）
-  ,height: 400 //容器高度
+  ,height: 520 //容器高度
   ,url: '/tblJSON'
+  ,cellMinWidth: 20
   ,page: true
   ,cols: [[{
-    field: 'id',title: 'ID'}
-    ,{field: 'startdate', title: '开始日期'}
-    ,{field: 'enddate', title: '结束日期'}
+    field: 'id',title: 'ID',width:16,align:'center'}
+    ,{field: 'startdate', title: '开始日期', width:180,sort:true}
+    ,{field: 'enddate', title: '结束日期',width:180, sort:true}
     ,{field: 'address', title: '地址'}
     ,{field: 'area', title: '范围'}
-    ,{field: 'typename', title:'类型'
-  }]] //设置表头
+    ,{field: 'typename', title:'类型', sort:true }
+    ]] //设置表头
   //,…… //更多参数参考右侧目录：基本参数选项
 });
 })
