@@ -13,6 +13,7 @@
           </div>
 <form id="login" class="layui-form" action method="POST">
     <div class="layui-form-item">
+      <input type="text" name="id" id="id" value="" style="display:none">
       <label class="layui-form-label">开始时间</label>
       <div class="layui-input-block">
         <input type="text" name="startdate" id="startdate" required  lay-verify="required" placeholder="开始日期" autocomplete="off" class="layui-input">
@@ -43,8 +44,10 @@
             <div class="layui-input-block">
               <select name="type_id" id="type_id" lay-verify="required">
                 <option value=""></option>
-                <option value="1">抢修停水</option>
-                <option value="2">计划停水</option>
+                {% for types in typelist %}
+                <option value="{{ types.id }}">{{ types.name }}</option>
+                {% endfor %}
+
               </select>
             </div>
           </div>
@@ -52,7 +55,7 @@
 
   <div class="layui-form-item">
     <div class="layui-input-block">
-      <button class="layui-btn" lay-submit lay-filter="formDemo">立即录入</button>
+      <button id="submit" class="layui-btn" lay-submit lay-filter="formDemo">立即录入</button>
     </div>
   </div>
 </form>
@@ -62,6 +65,10 @@
 </div>
 <div class="layui-col-md8">
     <table id="tingshui" lay-filter="test"></table>
+    <script type="text/html" id="barDemo">
+      <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+      <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    </script>
 </div>
     </div>
     </div>
@@ -86,12 +93,12 @@ layui.use('laydate', function(){
   });
   layui.use('form', function(){
       var form = layui.form;
-      
+      /*
       //监听提交
       form.on('submit(formDemo)', function(data){
       $('#login').submit();
        // $.post('auth/login',data.field);
-      });
+      });*/
     });
     
  
@@ -106,15 +113,34 @@ table.render({
   ,cellMinWidth: 20
   ,page: true
   ,cols: [[{
-    field: 'id',title: 'ID',width:16,align:'center'}
-    ,{field: 'startdate', title: '开始日期', width:180,sort:true}
-    ,{field: 'enddate', title: '结束日期',width:180, sort:true}
-    ,{field: 'address', title: '地址'}
-    ,{field: 'area', title: '范围'}
-    ,{field: 'typename', title:'类型', sort:true }
+    field: 'startdate', title: '开始日期', width:160,sort:true}
+    ,{field: 'enddate', title: '结束日期',width:160, sort:true}
+    ,{field: 'address', title: '地址',width:180}
+    ,{field: 'area', title: '范围',width:200}
+    ,{field: 'typename', title:'类型', sort:true,width:90 }
+    ,{fixed: 'right', width:118, align:'center', toolbar: '#barDemo'}
     ]] //设置表头
   //,…… //更多参数参考右侧目录：基本参数选项
 });
+  //监听工具条
+  table.on('tool(test)', function(obj){
+    var data = obj.data;
+    if(obj.event === 'detail'){ // 查看详情
+      layer.msg('ID'+ data.id +'：' + data.typename + '<br>开始时间:' 
+      + data.startdate + '<br>结束时间:' + data.enddate
+      + '<br>抢修地址:' + data.address + '<br>影响范围:' + data.area);
+    } else if(obj.event === 'edit'){ // 编辑数据
+      $('#id').val(data.id);
+      $('#startdate').val(data.startdate);
+      $('#enddate').val(data.enddate);
+      $('#address').val(data.address);
+      $('#area').val(data.area);
+      $('.layui-select-title>input').val(data.typename)
+      $('#type_id>option:contains('+data.typename+')')[0].selected=true
+      layer.msg('左边表单中进行编辑'); //提示信息
+      $('#submit').attr('class','layui-btn layui-btn-warm').text('确认修改') // 改变提交按钮
+    }
+  });
 })
 </script>
 {% endblock %}

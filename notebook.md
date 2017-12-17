@@ -54,3 +54,6 @@
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
     ```
+4. javascript
+    1. [解决ie缓存的问题](https://www.cnblogs.com/artech/archive/2013/01/03/cache-4-ie.html)  
+     `$.ajaxSetup({ cache: false }); `
