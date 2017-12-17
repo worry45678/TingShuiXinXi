@@ -18,13 +18,18 @@
   <body>
     <ul class="layui-nav">
         <li class="layui-nav-item">
-          <a href="">控制台<span class="layui-badge">9</span></a>
+          <a href="">供水运营服务信息中心</a>
         </li>
         <li class="layui-nav-item">
-          <a href="">个人中心<span class="layui-badge-dot"></span></a>
+          <a href="">大屏信息管理<span class="layui-badge-dot"></span></a>
         </li>
         <li class="layui-nav-item">
-          <a href=""><img src="http://t.cn/RCzsdCq" class="layui-nav-img">我</a>
+            {% if current_user.is_authenticated %}
+            <a href="#">{{ current_user.name }}</a>
+        {% else %}
+        <a href="{{ url_for('auth.login') }}">请登录</a>
+        {% endif %}
+          
           <dl class="layui-nav-child">
             <dd><a href="javascript:;">修改信息</a></dd>
             <dd><a href="javascript:;">安全管理</a></dd>

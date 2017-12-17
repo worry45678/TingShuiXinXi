@@ -1,17 +1,17 @@
 {% extends "baselayui.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}登陆{% endblock %}
+{% block title %}用户登录{% endblock %}
 
 {% block page_content %}
 
-    <!--{{ wtf.quick_form(form) }} -->
-    <div class="layui-container layui-bg-green">  
+    <div class="layui-container">  
         <div class="layui-row">
             <div class="layui-col-md4">
               <br>
             </div>
           <div class="layui-col-md4">
+            <hr>
               <div class="layui-header">
                 <h2 style="text-align:center">用户登录</h2>
               </div>
@@ -43,13 +43,13 @@
     </div>
         </div>
         </div>
-
+<!--
 <p>
     New user?
     <a href="{{ url_for('auth.register') }}">
         Click here to Register
     </a>
-</p>
+</p>-->
 {% endblock %}
 
 {% block scripts %}
