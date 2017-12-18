@@ -1,12 +1,12 @@
 from flask import Flask
-from flask_bootstrap import Bootstrap
+#from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, MigrateCommand
 from flask_login import LoginManager
 from config import config
 
 
-bootstrap = Bootstrap()
+#bootstrap = Bootstrap()
 migrate = Migrate()
 db = SQLAlchemy()
 login_manger = LoginManager()
@@ -22,7 +22,7 @@ def create_app(config_name):  # 注册app的函数
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
-    bootstrap.init_app(app)
+    #bootstrap.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
     login_manger.init_app(app)

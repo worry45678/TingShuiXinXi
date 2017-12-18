@@ -16,7 +16,7 @@ def login():
         if user is not None and user.verify_password(form.password.data): # 验证用户名和密码
             login_user(user, form.remember_me.data) # 使用login_user函数登陆用户
             return redirect(request.args.get('next') or url_for('main.index'))  # 登陆成功，返回index页面或跳转页面
-        flash('Invalid username or password') # 否则返回密码账号或密码错误
+        flash('账号或密码错误') # 否则返回密码账号或密码错误
     return render_template('auth/login.html', form=form) # 登陆失败，返回login页面
 
 
@@ -24,7 +24,6 @@ def login():
 @login_required
 def logout():
     logout_user() # 使用login_user函数登出用户 
-    flash('You have been logged out.')
     return redirect(url_for('main.index')) # 登出成功，返回index页面
 
 @auth.route('/serect')

@@ -1,5 +1,5 @@
 {% extends "baselayui.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
+
 
 {% block title %}用户登录{% endblock %}
 
@@ -27,7 +27,14 @@
             <div class="layui-input-block">
               <input type="password" name="password" id="password" required  lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
             </div>
-    </div>
+          </div>
+          {% for message in get_flashed_messages() %}
+          <div id="flash" class="alert alert-warning" >
+              <button class="layui-btn layui-btn-danger" style="width:100%">
+                  <i class="layui-icon">&#x1006;</i> {{ message }}
+                </button>
+          </div>
+          {% endfor %}
     <div class="layui-form-item">
         <label class="layui-form-label">记住我</label>
         <div class="layui-input-block">
@@ -36,7 +43,7 @@
       </div>
       <div class="layui-form-item">
         <div class="layui-input-block">
-          <button class="layui-btn" lay-submit lay-filter="formDemo">立即登陆</button>
+          <button class="layui-btn" lay-submit lay-filter="formSubmit">立即登陆</button>
         </div>
       </div>
     </form>
@@ -57,12 +64,14 @@
     //Demo
     layui.use('form', function(){
       var form = layui.form;
-      
+      /*
       //监听提交
-      form.on('submit(formDemo)', function(data){
+      form.on('submit(formSubmit)', function(data){
       $('#login').submit();
        // $.post('auth/login',data.field);
       });
+      */
     });
+    $('#flash').on('click',function(){$('#flash').remove()}) //删除错误消息框
     </script>
 {% endblock %}    

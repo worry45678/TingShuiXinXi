@@ -25,8 +25,8 @@ class DevelopmentConfig(Config):
     开发者配置
     """
     DEBUG = True
-    #SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:123456@192.168.222.100/rx?charset=utf8'
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///test2.db'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:123456@192.168.222.100/rx?charset=utf8'
+    #SQLALCHEMY_DATABASE_URI = 'sqlite:///test2.db'
 
 
 config = {'development': DevelopmentConfig, 'default': DevelopmentConfig}  # 配置名称

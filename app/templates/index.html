@@ -2,12 +2,16 @@
 
 {% block page_content %}
 <h1>停水信息</h1>
-Hello,
-{% if current_user.is_authenticated %}
-    {{ current_user.name }}
-{% else %}
-    Stranger
-{% endif %}
-
+<div>
+    <table>
+        <thead>
+            <td>类型</td>
+            <td>开始时间</td>
+            <td>结束时间</td>
+            <td>施工地址</td>
+            <td>影响范围</td>
+        </thead>
+    </table>
+</div>
 {% endblock %}
 

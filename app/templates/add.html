@@ -1,5 +1,5 @@
 {% extends "baselayui.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
+
 
 {% block title %}登入停水信息{% endblock %}
 
@@ -7,10 +7,11 @@
 <div class="layui-container">  
     <div class="layui-row">
 <hr>
-      <div class="layui-col-md3">
+      <div class="layui-col-md4">
           <div class="layui-header">
-            <h2 style="text-align:center">录入停水信息</h2>
+            <h2 id="h2title" style="text-align:center">录入停水信息</h2>
           </div>
+      <div style="width:90%">
 <form id="login" class="layui-form" action method="POST">
     <div class="layui-form-item">
       <input type="text" name="id" id="id" value="" style="display:none">
@@ -36,7 +37,7 @@
     <div class="layui-form-item layui-form-text">
       <label class="layui-form-label">影响区域</label>
       <div class="layui-input-block">
-        <textarea name="area" id="area" placeholder="请输入内容" class="layui-textarea"></textarea>
+        <textarea name="area" id="area" placeholder="请输入内容" class="layui-textarea" style="height:210px"></textarea>
       </div>
     </div>
         <div class="layui-form-item">
@@ -58,10 +59,15 @@
       <button id="submit" class="layui-btn" lay-submit lay-filter="formDemo">立即录入</button>
     </div>
   </div>
+  {% for message in get_flashed_messages() %}
+  <div id="flash" class="alert alert-warning" >
+      <button class="layui-btn layui-btn-primary" style="width:100%">
+          <i class="layui-icon">&#x1006;</i> {{ message }}
+        </button>
+  </div>
+  {% endfor %}
 </form>
 </div>
-<div class="layui-col-md1">
-  <br>
 </div>
 <div class="layui-col-md8">
     <table id="tingshui" lay-filter="test"></table>
@@ -108,13 +114,13 @@ layui.use('table',function(){
   
 table.render({
   elem: '#tingshui' //指定原始表格元素选择器（推荐id选择器）
-  ,height: 520 //容器高度
+  ,height: 600 //容器高度
   ,url: '/tblJSON'
   ,cellMinWidth: 20
   ,page: true
   ,cols: [[{
-    field: 'startdate', title: '开始日期', width:160,sort:true}
-    ,{field: 'enddate', title: '结束日期',width:160, sort:true}
+    field: 'startdate', title: '开始时间', width:160,sort:true}
+    ,{field: 'enddate', title: '结束时间',width:160, sort:true}
     ,{field: 'address', title: '地址',width:180}
     ,{field: 'area', title: '范围',width:200}
     ,{field: 'typename', title:'类型', sort:true,width:90 }
@@ -132,15 +138,18 @@ table.render({
     } else if(obj.event === 'edit'){ // 编辑数据
       $('#id').val(data.id);
       $('#startdate').val(data.startdate);
-      $('#enddate').val(data.enddate);
+      var myDate = new Date();
+      $('#enddate').val(data.enddate || '2017-12-18 00:00:00')
       $('#address').val(data.address);
       $('#area').val(data.area);
       $('.layui-select-title>input').val(data.typename)
       $('#type_id>option:contains('+data.typename+')')[0].selected=true
       layer.msg('左边表单中进行编辑'); //提示信息
       $('#submit').attr('class','layui-btn layui-btn-warm').text('确认修改') // 改变提交按钮
+      $('#h2title').text('编辑停水信息')
     }
   });
 })
+$('#flash').on('click',function(){$('#flash').remove()}) //删除错误消息框
 </script>
 {% endblock %}
