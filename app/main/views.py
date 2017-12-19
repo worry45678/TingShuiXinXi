@@ -11,7 +11,12 @@ from ..models import tblData, tblType, tblUser
 
 @main.route('/', methods=['GET','POST'])
 def index():
-    return render_template('index.html')
+    """
+    尚未结束的停水
+    """
+    from sqlalchemy import or_
+    running = tblData.query.filter(or_(tblData.enddate>datetime.now().date(),tblData.enddate==None)).all()
+    return render_template('index.html', running=running)
 
 
 @main.route('/add', methods=['GET','POST'])
@@ -31,7 +36,7 @@ def addData():
             inputdata.startdate=form.startdate.data
             inputdata.enddate = ed
             inputdata.address = form.address.data
-            inputdata.area = form.area.data
+            inputdata.area = form.area.data.replace('\r',' ').replace('\n' ,' ')
             inputdata.type_id = form.type_id.data
             inputdata.user_id = current_user.id
             flash('编辑信息成功')
@@ -40,7 +45,7 @@ def addData():
             inputdata=tblData(startdate=form.startdate.data,
             enddate=ed,
             address=form.address.data,
-            area=form.area.data,
+            area=form.area.data.replace('\r',' ').replace('\n' ,' '),
             type_id=form.type_id.data,
             user_id=current_user.id)
             flash('输入信息成功')

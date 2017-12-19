@@ -1,16 +1,33 @@
 {% extends "baselayui.html" %}
 
+{% block head %}
+{{ super () }}
+<meta http-equiv="pragma" content="no-cache"/>
+<meta http-equiv="refresh" content="10">
+<link rel="stylesheet" href="static/table.css">
+{% endblock %}
 {% block page_content %}
-<h1>停水信息</h1>
 <div>
-    <table>
+    <table id="table-4">
         <thead>
-            <td>类型</td>
-            <td>开始时间</td>
-            <td>结束时间</td>
-            <td>施工地址</td>
-            <td>影响范围</td>
+            <td class="one">类型</td>
+            <td class="two">开始时间</td>
+            <td class="three">结束时间</td>
+            <td class="four">施工地址</td>
+            <td class="five">影响范围</td>
         </thead>
+        <tbody>
+            {% for row in running %}
+            <tr>
+                <td>{{ row.typename.name }}</td>
+                <td>{{ row.startdate }}</td>
+                <td>{{ row.enddate }}</td>
+                <td>{{ row.address }}</td>
+                <td>{{ row.area }}</td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </div>
 {% endblock %}

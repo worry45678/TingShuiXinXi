@@ -1,8 +1,9 @@
 
 <!DOCTYPE html>
 <html>
-  <head> <!-- head部分加入favicon图标 -->
 
+  <head> <!-- head部分加入favicon图标 -->
+    {% block head %}
     <title>{% block title %}停水信息{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
@@ -13,8 +14,10 @@
     <!--[if lt IE 9]>
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
 <![endif]—>-->
-
+{% endblock %}
   </head>
+
+
   <body>
     <div class="layui-header layui-bg-black">
     <ul class="layui-nav layui-layout-left">
@@ -52,6 +55,7 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/static/layui/layui.js"></script>
+    <script src="/static/wysiwyg.js"></script>
     <script>
     $.ajaxSetup({cache:false}) //ajax请求禁止缓存
     </script>
