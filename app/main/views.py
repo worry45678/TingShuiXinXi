@@ -5,7 +5,8 @@ from . import main
 from datetime import datetime
 from .. import db
 from .forms import InputData
-from ..models import tblData, tblType, tblUser
+from ..models import tblData, tblType, tblUser, Permission
+from ..decorators import admin_required, permission_required
 
 
 
@@ -62,11 +63,18 @@ def tblJSON():
     return '''{"code":0,"msg":"","count":%d,"data":%s}''' %(tblData.query.count(), tblData.query.order_by(db.desc(tblData.id)).offset(int(request.args.get('limit'))*(int(request.args.get('page'))-1)).limit(request.args.get('limit')).all())
 
 
-@main.route('/running')
-def running():
+@main.route('/admin')
+@login_required
+@admin_required
+def for_admins_only():
     """
-    尚未结束的停水
+    admin管理员页面
     """
-    from sqlalchemy import or_
-    running = tblData.query.filter(or_(tblData.enddate>datetime.now().date(),tblData.enddate==None)).all()
-    return render_template('index.html', running=running)
+    return "For Administrator!"
+
+
+@main.route('/moderator')
+@login_required
+@permission_required(Permission.MODERATE_COMMENTS)
+def for_moderators_only():
+    return "For comment moderators!"

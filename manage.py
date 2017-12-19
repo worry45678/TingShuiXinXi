@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import os
 from app import create_app, db
-from app.models import tblData, tblType, tblUser
+from app.models import tblData, tblType, tblUser, tblRole
 from flask_script import Manager, Shell
 from flask_migrate import MigrateCommand
 
@@ -11,7 +11,7 @@ manager = Manager(app)
 
 
 def make_shell_context():
-    return dict(app=app, db=db, tblData=tblData, tblType=tblType, tblUser=tblUser)
+    return dict(app=app, db=db, tblData=tblData, tblType=tblType, tblUser=tblUser,tblRole=tblRole)
 
 
 manager.add_command("shell", Shell(make_context=make_shell_context))
