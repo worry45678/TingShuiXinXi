@@ -4,7 +4,7 @@
 {{ super () }}
 <meta http-equiv="pragma" content="no-cache"/>
 <!--<meta http-equiv="refresh" content="100">-->
-<link rel="stylesheet" href="static/table.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='table.css') }}">
 {% endblock %}
 {% block page_content %}
 <div>

@@ -20,13 +20,26 @@ class Config:
         pass
 
 
+class DefaultConfig(Config):
+    """
+    其他机器配置
+    """
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'
+
+
 class DevelopmentConfig(Config):
     """
     开发者配置
     """
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:123456@192.168.222.100/rx?charset=utf8'
-    #SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'
+
+class ServerConfig(Config):
+    """
+    服务器配置
+    """
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:123456@192.168.222.100/rx?charset=utf8'
 
 
-config = {'development': DevelopmentConfig, 'default': DevelopmentConfig}  # 配置名称
+config = {'develop': DevelopmentConfig, 'default': DefaultConfig, 'server': ServerConfig}  # 配置名称

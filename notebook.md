@@ -1,10 +1,20 @@
 
 ### 学习内容
+
+* 装饰器的定义和使用
+
 1. flask通用
     1. 注册蓝本以及路由前缀 `app.register_blueprint(auth_blueprint, url_prefix='/auth')`
-
+    2. app上下文管理器 main/__init__.py
+    即可在templates模板中调用该常量
+    ```
+    # 用于模板中调用Permission
+    @main.app_context_processor
+    def inject_permissions():
+    return dict(Permission=Permission)
+    ```
 2. flask_login 管理已登陆用户的用户会话
-    1. `from flask_login import UserMixin`用户模型实现方法
+    1. `from flask_login import UserMixin`用户模型实现方法  
         `class User(UserMixin,db.Model)`
     2. `from flask_login import LoginManger`登陆管理app/__init__.py:
         ```
