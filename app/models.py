@@ -39,8 +39,8 @@ class tblUser(UserMixin, db.Model):
 
     def __init__(self, **kwargs):
         super(tblUser, self).__init__(**kwargs)
-        if self.role_id is None:
-            if self.name == 'ADMIN':
+        if self.role_id is None: # 如果名称为admin，则设为管理员
+            if self.name == 'admin':
                 self.role_id = tblRole.query.filter_by(permissions=0xff).first().id
             if self.role_id is None:
                 self.role_id = tblRole.query.filter_by(default=True).first().id
@@ -74,9 +74,9 @@ class tblRole(db.Model):
     __tablename__ = 'roles'
 
     id = db.Column('ID', db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column('Name', db.String(10))
+    name = db.Column('Name', db.String(16))
     default = db.Column(db.Boolean, default=False, index=True)
-    permissions = db.Column('Premission', db.Integer)
+    permissions = db.Column('Permission', db.Integer)
     users = db.relationship('tblUser', backref='rolename', lazy='dynamic')
 
     @staticmethod
@@ -90,7 +90,7 @@ class tblRole(db.Model):
             role = tblRole.query.filter_by(name=r).first()
             if role is None:
                 role = tblRole(name=r)
-            role.premissions = roles[r][0]
+            role.permissions = roles[r][0]
             role.default = roles[r][1]
             db.session.add(role)
         db.session.commit()

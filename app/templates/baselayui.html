@@ -31,7 +31,7 @@
       <ul class="layui-nav layui-layout-right">
           <li class="layui-nav-item">
               {% if current_user.is_authenticated %}
-              <a href="#">{{ current_user.name }}</a>
+              <a href="#">{{ current_user.rolename.name }}:{{ current_user.name }} </a>
               {% endif %}    
           
           </li>
@@ -55,11 +55,12 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="/static/layui/layui.js"></script>
-    <script src="/static/wysiwyg.js"></script>
+    <!--<script src="/static/wysiwyg.js"></script>-->
     <script>
     $.ajaxSetup({cache:false}) //ajax请求禁止缓存
+    $('#flash').on('click',function(){$('#flash').remove()}) //删除错误消息框
     </script>
-
+    
 {% block scripts %}
 {% endblock %}
   </body>

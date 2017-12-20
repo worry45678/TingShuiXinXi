@@ -35,13 +35,16 @@ def secret():
 @auth.route('/register', methods=['GET','POST'])
 def register():
     """
-    注册页面，根据用户表单填写信息写入数据库
+    注册页面，根据用户表单填写信息写入数据库，已有用户返回flash错误信息
     """
     form = RegistrationForm()
     if request.method == 'POST':
-        print('ok')
-        user = tblUser(name=form.username.data, password=form.password.data)
-        db.session.add(user)
-        flash('You can now login')
-        return redirect(url_for('auth.login'))
+        if tblUser.query.filter_by(name=form.username.data):
+            flash('该用户名已注册，请直接登录')
+            return render_template('auth/register.html', form=form)
+        else:
+            user = tblUser(name=form.username.data, password=form.password.data)
+            db.session.add(user)
+            flash('You can now login')
+            return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)

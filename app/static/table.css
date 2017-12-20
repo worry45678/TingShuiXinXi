@@ -12,10 +12,10 @@
     
     /* Padding and font style */
     #table-4 td, #table-4 th {
-    padding: 5px 5px;
-    font-size: 22pt;
-    font-family: Verdana;
-    font-weight: bold;
+    padding: 3px 5px;
+    font-size: 21pt;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
     color: #393D49;
     }
     
@@ -31,13 +31,13 @@ td.one {
     width:60px;
 }
 td.two {
-    width:100px;
+    width:150px;
 }
 td.three {
-    width:100px;
+    width:150px;
 }
 td.four {
-    width:100px;
+    width:240px;
 }
 td.five {
     width:100px;

@@ -16,7 +16,7 @@ def index():
     尚未结束的停水
     """
     from sqlalchemy import or_
-    running = tblData.query.filter(or_(tblData.enddate>datetime.now().date(),tblData.enddate==None)).all()
+    running = tblData.query.filter(or_(tblData.enddate>datetime.now().date(), tblData.enddate==None)).order_by(db.desc(tblData.id)).all()
     return render_template('index.html', running=running)
 
 
@@ -24,7 +24,7 @@ def index():
 @login_required
 def addData():
     form = InputData()
-    typelist = tblType.query.all()
+    typelist = tblType.query.order_by('id').all()
     try:
         ed = datetime.strptime(form.enddate.data,'%Y-%m-%d %H:%M:%S')
     except:
